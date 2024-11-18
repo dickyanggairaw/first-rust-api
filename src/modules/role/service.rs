@@ -18,13 +18,13 @@ impl RoleService {
     pub async fn create_role(&self, dto: CreateRoleDto) -> Role {
       self.repository.create(dto).await
     }
-    pub async fn get_role_by_id(&self, id: u64) -> Role {
+    pub async fn get_role_by_id(&self, id: i32) -> Role {
       self.repository.get_role_by_id(id).await
     }
-    pub async fn update_role(&self, id: u64, dto: CreateRoleDto) -> Role {
+    pub async fn update_role(&self, id: i32, dto: CreateRoleDto) -> Role {
       self.repository.update_role(id, dto).await
     }
-    pub async fn delete_role(&self, id: u64) -> String {
+    pub async fn delete_role(&self, id: i32) -> String {
       self.repository.delete_role(id).await
     }
 }

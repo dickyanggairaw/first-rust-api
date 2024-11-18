@@ -4,11 +4,11 @@ mod config;
 mod helpers;
 mod middlewares;
 mod utils;
+mod schema;
 
 use actix_web::{App, HttpServer};
 use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
-use crate::modules::role::model::Role;
 use crate::docs::api_doc::ApiDoc;
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {

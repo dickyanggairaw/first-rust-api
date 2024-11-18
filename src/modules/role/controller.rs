@@ -1,8 +1,6 @@
-// use actix_web::http::StatusCode;
 use actix_web::{delete, get, post, put, web, Responder};
 use crate::utils::message::{RESPONSE_CREATE, RESPONSE_DELETE, RESPONSE_GET, RESPONSE_UPDATE};
 use crate::utils::response::success_response;
-use crate::Role;
 use crate::modules::role::RoleService;
 use crate::modules::role::dto::CreateRoleDto;
 
@@ -10,7 +8,7 @@ use crate::modules::role::dto::CreateRoleDto;
   get,
   path = "/api/v1/roles/",
   responses(
-      (status = 200, description = "Get role", body = Vec<Role>)
+      (status = 200, description = "Get role")
   )
 )]
 #[get("/")]
@@ -22,7 +20,7 @@ pub async fn get_role_handler(role_service: web::Data<RoleService>) -> impl Resp
   post,
   path = "/api/v1/roles/",
   responses(
-      (status = 200, description = "Create role", body = Role)
+      (status = 200, description = "Create role")
   ),
   request_body = CreateRoleDto
 )]
@@ -38,16 +36,16 @@ pub async fn create_role_handler (
   get,
   path = "/api/v1/roles/{id}",
   responses(
-      (status = 200, description = "Get role", body = Role)
+      (status = 200, description = "Get role")
   ),
   params(
-    ("id" = u64, Path, description = "Role database id to get Role for"),
+    ("id" = i32, Path, description = "Role database id to get Role for"),
   )
 )]
 #[get("/{id}")]
 pub async fn get_role_by_id(
   role_service: web::Data<RoleService>,
-  path: web::Path<u64>
+  path: web::Path<i32>
 ) -> impl Responder {
   let id = path.into_inner();
   let role = role_service.get_role_by_id(id).await;
@@ -57,10 +55,10 @@ pub async fn get_role_by_id(
   put,
   path = "/api/v1/roles/{id}",
   responses(
-      (status = 200, description = "Get role", body = Role)
+      (status = 200, description = "Get role")
   ),
   params(
-    ("id" = u64, Path, description = "Role database id to get Role for"),
+    ("id" = i32, Path, description = "Role database id to get Role for"),
   ),
   request_body = CreateRoleDto
 )]
@@ -68,7 +66,7 @@ pub async fn get_role_by_id(
 pub async fn update_role(
   role_service: web::Data<RoleService>,
   dto: web::Json<CreateRoleDto>,
-  path: web::Path<u64>
+  path: web::Path<i32>
 ) -> impl Responder {
   let id = path.into_inner();
   let role = role_service.update_role(id, dto.into_inner()).await;
@@ -81,13 +79,13 @@ pub async fn update_role(
       (status = 200, description = "Get role", body = String)
   ),
   params(
-    ("id" = u64, Path, description = "Role database id to delete Role for"),
+    ("id" = i32, Path, description = "Role database id to delete Role for"),
   )
 )]
 #[delete("/{id}")]
 pub async fn delete_role_by_id(
   role_service: web::Data<RoleService>,
-  path: web::Path<u64>
+  path: web::Path<i32>
 ) -> impl Responder {
   let id = path.into_inner();
   let role = role_service.delete_role(id).await;
