@@ -1,8 +1,8 @@
 use std::env;
 use dotenvy::dotenv;
-use sqlx::{self, postgres::PgPoolOptions, PgPool};
+use sqlx::{self, postgres::PgPoolOptions, PgPool, Pool, Postgres};
 
-// pub type DbPool = Pool<Postgres>;
+pub type DbPool = Pool<Postgres>;
 
 pub async fn establish_connection() -> PgPool {
   dotenv().ok();

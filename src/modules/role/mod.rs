@@ -7,10 +7,10 @@ use std::sync::Arc;
 
 use actix_web::{web, Scope};
 use service::RoleService;
-use crate::modules::role::repository::RoleRepository;
+use crate::{config::postgresql::DbPool, modules::role::repository::RoleRepository};
 
-pub fn role_routes() -> Scope {
-  let role_repository = Arc::new(RoleRepository);
+pub fn role_routes(pool: Arc<DbPool>) -> Scope {
+  let role_repository = Arc::new(RoleRepository::new(pool.clone()));
   let role_service = RoleService::new(role_repository);
   web::scope("/roles")
       .app_data(web::Data::new(role_service))

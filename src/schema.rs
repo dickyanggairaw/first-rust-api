@@ -11,3 +11,25 @@ diesel::table! {
         updated_at -> Nullable<Timestamp>,
     }
 }
+
+diesel::table! {
+    users (id) {
+        id -> Int4,
+        #[max_length = 100]
+        name -> Varchar,
+        #[max_length = 100]
+        email -> Varchar,
+        #[max_length = 255]
+        password -> Varchar,
+        role_id -> Nullable<Int4>,
+        created_at -> Nullable<Timestamp>,
+        updated_at -> Nullable<Timestamp>,
+    }
+}
+
+diesel::joinable!(users -> role (role_id));
+
+diesel::allow_tables_to_appear_in_same_query!(
+    role,
+    users,
+);
