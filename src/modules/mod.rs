@@ -10,5 +10,5 @@ pub fn init_route(pool: Arc<DbPool>) -> Scope {
   let v1 = "/api/v1";
   web::scope(v1)
     .service(role::role_routes(pool.clone()))
-    .service(user::user_routes(pool))
+    .service(user::user_routes(pool.clone()))
 }

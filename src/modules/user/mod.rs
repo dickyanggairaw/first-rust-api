@@ -9,6 +9,7 @@ pub mod repository;
 pub mod service;
 pub mod model;
 pub mod controller;
+pub mod dto;
 
 pub fn user_routes(pool: Arc<DbPool>) -> Scope {
   let user_repository = Arc::new(UserRepository::new(pool.clone()));
@@ -16,4 +17,6 @@ pub fn user_routes(pool: Arc<DbPool>) -> Scope {
   web::scope("user")
     .app_data(web::Data::new(user_service))
     .service(controller::get_all_user)
+    .service(controller::register)
+    .service(controller::login)
 }
