@@ -9,6 +9,12 @@ use crate::modules::role::dto::CreateRoleDto;
   path = "/api/v1/roles/",
   responses(
       (status = 200, description = "Get role")
+  ),
+  params(
+    ("access_token" = String, Header, description = "This is a custom header value"),
+  ),
+  security(
+    ("bearerAuth" = [])
   )
 )]
 #[get("/")]
@@ -22,7 +28,10 @@ pub async fn get_role_handler(role_service: web::Data<RoleService>) -> impl Resp
   responses(
       (status = 200, description = "Create role")
   ),
-  request_body = CreateRoleDto
+  request_body = CreateRoleDto,
+  params(
+    ("access_token" = String, Header, description = "This is a custom header value"),
+  )
 )]
 #[post("/")]
 pub async fn create_role_handler (
@@ -40,6 +49,7 @@ pub async fn create_role_handler (
   ),
   params(
     ("id" = i32, Path, description = "Role database id to get Role for"),
+    ("access_token" = String, Header, description = "This is a custom header value"),
   )
 )]
 #[get("/{id}")]
@@ -59,6 +69,7 @@ pub async fn get_role_by_id(
   ),
   params(
     ("id" = i32, Path, description = "Role database id to get Role for"),
+    ("access_token" = String, Header, description = "This is a custom header value"),
   ),
   request_body = CreateRoleDto
 )]
@@ -80,6 +91,7 @@ pub async fn update_role(
   ),
   params(
     ("id" = i32, Path, description = "Role database id to delete Role for"),
+    ("access_token" = String, Header, description = "This is a custom header value"),
   )
 )]
 #[delete("/{id}")]

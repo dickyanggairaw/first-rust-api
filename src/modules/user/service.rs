@@ -1,4 +1,4 @@
-use std::{sync::Arc};
+use std::sync::Arc;
 
 use crate::helpers::{hash::{hash_password, verify_password}, jsonwebtoken::generate_token};
 
@@ -26,7 +26,7 @@ impl UserService {
       let user = self.repository.find_user_by_email(dto.email).await;
       let flag = verify_password(&user.password, &dto.password).unwrap();
       if flag {
-        let token = generate_token(&user.email);
+        let token = generate_token(&user.id.to_string());
         Ok(token.unwrap())
       }else {
         Err("Invalid email or password")

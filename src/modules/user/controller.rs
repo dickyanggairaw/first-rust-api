@@ -7,7 +7,10 @@ use super::{dto::{CreateUserDto, LoginUserDto}, service::UserService};
   path = "/api/v1/user/",
   responses(
     (status = 200, description = "Get User")
-)
+  ),
+  params(
+    ("access_token" = String, Header, description = "This is a custom header value"),
+  )
 )]
 #[get("/")]
 pub async fn get_all_user(user_service: web::Data<UserService>) -> impl Responder {

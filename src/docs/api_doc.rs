@@ -7,5 +7,10 @@ use crate::modules::user::controller::{__path_get_all_user, __path_register, __p
 use crate::modules::user::dto::CreateUserDto;
 
 #[derive(OpenApi)]
-#[openapi(paths(get_role_handler, create_role_handler, get_role_by_id, update_role, delete_role_by_id, get_all_user, register, login), components(schemas(CreateRoleDto, CreateUserDto)))]
+#[openapi(
+  paths(get_role_handler, create_role_handler, get_role_by_id, update_role, delete_role_by_id, get_all_user, register, login), 
+  components(
+    schemas(CreateRoleDto, CreateUserDto),
+  )
+)]
 pub struct ApiDoc;

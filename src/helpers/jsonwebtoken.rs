@@ -1,12 +1,12 @@
 use chrono::{Duration, Utc};
-use jsonwebtoken::{encode, errors::Error, EncodingKey, Header};
+use jsonwebtoken::{decode, encode, errors::Error, DecodingKey, EncodingKey, Header, TokenData, Validation};
 use serde::{Serialize,Deserialize};
 
 /// Secret key for signing tokens
 const SECRET_KEY: &str = "your-secret-key";
 
 #[derive(Serialize,Deserialize,Debug)]
-struct Claims {
+pub struct Claims {
   sub: String,
   exp: usize
 }
@@ -26,6 +26,15 @@ pub fn generate_token(data: &str) -> Result<String, Error> {
     &Header::default(), 
     &claims, 
     &EncodingKey::from_secret(SECRET_KEY.as_ref()));
-
+    println!("{}", token.clone().unwrap());
   token
+}
+
+pub fn verify_jwt(token: &str) -> Result<TokenData<Claims>, jsonwebtoken::errors::Error> {
+  let token_data = decode::<Claims>(
+    token, 
+    &DecodingKey::from_secret(SECRET_KEY.as_ref()), 
+    &Validation::default()
+  );
+  token_data
 }
