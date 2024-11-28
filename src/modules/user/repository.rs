@@ -1,18 +1,17 @@
-use std::sync::Arc;
-
+use std::sync::{Arc, RwLock};
 use sqlx::query_as;
-
-use crate::config::postgresql::DbPool;
-
+use crate::{config::postgresql::DbPool, helpers::redis::RedisHelper};
 use super::{dto::CreateUserDto, model::User};
 
+#[allow(dead_code)]
 pub struct UserRepository {
   pool: Arc<DbPool>,
+  redis: Arc<RwLock<RedisHelper>>
 }
 
 impl UserRepository {
-    pub fn new(pool: Arc<DbPool>) ->Self {
-      Self {pool}
+    pub fn new(pool: Arc<DbPool>, redis: Arc<RwLock<RedisHelper>>) ->Self {
+      Self {pool, redis}
     }
 
     pub async fn fetch_all(&self) -> Vec<User> {
